@@ -17,7 +17,7 @@ app = Flask(__name__)
 CORS(app, support_credentials=True)
 
 
-
+#
 # * ---------- DATABASE CONFIG --------- *
 # DATABASE_USER = os.environ['ROOT']
 # DATABASE_PASSWORD = os.environ['12345678']
@@ -61,6 +61,11 @@ def check(t1):
             return 1
     else:
         return 1
+
+
+
+
+
 
 
 # * --------------------  ROUTES ------------------- *
