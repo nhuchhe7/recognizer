@@ -155,21 +155,29 @@ def get_receive_data():
         		cur.execute(sql)
         		mydb.commit()
         else:
-        	ss='p'
-        	tt='N'
-        	sql1 = ("SELECT inTime FROM faceapp_setting_time WHERE id=1")
-        	cur.execute(sql1)
-        	d= cur.fetchall()
-        	print(d[0][0])
-        	intime=d[0][0]
-        	t1 = datetime.strptime(str(intime),'%H:%M:%S.%f').time()
-        	t2 = datetime.now().time()
-        	interval=datetime.combine(datetime.today(), t2) - datetime.combine(datetime.today(), t1)
-        	print(interval)
-
-        	sql=('''INSERT INTO faceapp_attendancetb( date, time, status, t_id, late_time)VALUES('{}','{}','{}','{}','{}')'''.format(date,time,ss,c,tt))
-        	cur.execute(sql)
-        	mydb.commit()
+            ss='p'
+            tt='N'
+            sql1 = ("SELECT inTime, tolerance FROM faceapp_setting_time WHERE id=1")
+            cur.execute(sql1)
+            d= cur.fetchall()
+            print(d[0][0])
+            intime=d[0][0]
+            tolerance=d[0][1]
+            t1 = datetime.strptime(str(intime),'%H:%M:%S.%f').time()
+            t2 = datetime.now().time()
+            interval=datetime.combine(datetime.today(), t2) - datetime.combine(datetime.today(), t1)
+            print(interval,type(interval))
+            print(tolerance)
+            # tolerance=datetime.strptime(str(tolerance),'%H:%M:%S.%f').time()
+            # tolerance=tolerance.total_seconds()/60
+            intt = interval.total_seconds()/60
+            print(type(intt))
+            if(intt>0 and intt<tolerance):
+                sql=('''INSERT INTO faceapp_attendancetb( date, time, status, t_id, late_time)VALUES('{}','{}','{}','{}','{}')'''.format(date,time,ss,c,tt))
+            else:
+                sql=('''INSERT INTO faceapp_attendancetb( date, time, status, t_id, late_time)VALUES('{}','{}','{}','{}','{}')'''.format(date,time,ss,c,intt))
+            cur.execute(sql)
+            mydb.commit()
 
 
     return jsonify(json_data)
