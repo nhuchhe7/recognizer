@@ -102,7 +102,7 @@ def get_receive_data():
         t=time1[0][0]
         print(type(t),t)
         sts=check(t)
-
+        
         status='p'
         if sts==1:
             sql=('''INSERT INTO faceapp_attendancetb( date, time, status,t_id)
