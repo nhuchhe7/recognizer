@@ -28,8 +28,8 @@ CORS(app, support_credentials=True)
 def DATABASE_CONNECTION():
     return mysql.connector.connect(
                 host="localhost",
-                user="root",
-                password="12345678",
+                user="postgres",
+                password="sunder",
                 database="project"
                 )
 

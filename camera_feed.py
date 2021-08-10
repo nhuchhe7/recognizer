@@ -18,6 +18,15 @@ import dlib
 
 face_classes = {0: 'Amar Naga', 1: 'Anirudh Basukala', 2: 'Manish Kharbuja', 3: 'Manish Nhuchhe',4:'sks' ,5: 'Sunder Tamakhu'}
 
+
+
+def get_id(name):
+    useid_class={2:'Manish Nhuchhe',3:'Sunder Tamakhu',4:'Manish Kharbuja,'5:'Amar Naga',6:'Anirudh Basukala'}
+    for id, n in userid_class.items():
+        if n==name:
+        return(id)
+
+
 def draw_label(image, point, label, font=cv2.FONT_HERSHEY_SIMPLEX,
                font_scale=0.8, thickness=1):
     size = cv2.getTextSize(label, font, font_scale, thickness)[0]
@@ -82,6 +91,7 @@ while True:
                 #print(face_classes[preds.argmax()])
                 face_labels.append(face_classes[preds.argmax()])
                 name=face_classes[preds.argmax()]
+
                 json_to_export['name'] = name
                 r = requests.post(url='http://127.0.0.1:5000/receive_data', json=json_to_export)
 
