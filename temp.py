@@ -181,7 +181,7 @@ def get_receive_data():
             sql1 = ("SELECT * FROM faceapp_timesetting WHERE id=1")
             cur.execute(sql1)
             d= cur.fetchall()
-            print(d[0][0])
+            # print(d[0][0])
             t1=intime=d[0][1]
             tolerance=d[0][3]
             print(d)

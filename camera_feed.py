@@ -4,7 +4,7 @@ import requests, os, re
 # Load our model
 from tensorflow.keras.models import load_model
 from datetime import datetime
-Project7Sem = load_model('face_new_model3.h5')
+Project8Sem = load_model('face_new_model3.h5')
 
 from os import listdir
 from os.path import isfile, join
@@ -83,7 +83,7 @@ while True:
         face_labels = []
         
         for i, d in enumerate(detected):
-            preds = Project7Sem.predict(preprocessed_faces[i])[0]
+            preds = Project8Sem.predict(preprocessed_faces[i])[0]
             #print(type(preds))
            # count = len([i for i in preds if i > 0.3]) 
             if (max(preds))>0.30:
@@ -111,7 +111,7 @@ while True:
             draw_label(frame, (d.left(), d.top()), label)
    
         
-    cv2.imshow("Project7Sem", frame)
+    cv2.imshow("Project8Sem", frame)
     if cv2.waitKey(1) == 13: #13 is the Enter Key
         break
 #print(face_labels)
