@@ -168,10 +168,16 @@ def get_receive_data():
             status='p'
             if sts==1:
                 intt, tolerance=get_late()
+                sql='''SELECT MAX(Id) AS LastID FROM faceapp_attendancetb'''
+                cur.execute(sql)
+                t_id=cur.fetchall()
+                # print(t_id,type(t_id))
+                idd=t_id[0][0]
+                # print(idd,type(idd))
                 if(intt>0 and intt<tolerance):
-                    sql=('''INSERT INTO faceapp_attendancetb( date, time, user_id)VALUES ('{}','{}','{}') ''').format(date,time,c)
+                    sql=('''INSERT INTO faceapp_attendancetb( id, date, time, user_id)VALUES ({},'{}','{}','{}') ''').format(idd+1,date,time,c)
                 else:
-                    sql=('''INSERT INTO faceapp_attendancetb( date, time,user_id, late_time)VALUES('{}','{}','{}','{}')'''.format(date,time,c,intt))
+                    sql=('''INSERT INTO faceapp_attendancetb( id, date, time,user_id, late_time)VALUES({},'{}','{}','{}','{}')'''.format(idd+1,date,time,c,intt))
                 print(sql)
                 cur.execute(sql)
                 mydb.commit()
@@ -194,11 +200,17 @@ def get_receive_data():
             # tolerance=tolerance.total_seconds()/60
             intt = interval.total_seconds()/60
             print(type(intt))
+            sql='''SELECT MAX(Id) AS LastID FROM faceapp_attendancetb'''
+            cur.execute(sql)
+            t_id=cur.fetchall()
+            # print(t_id,type(t_id))
+            idd=t_id[0][0]
+            # print(idd,type(idd))
             intt=int(intt)
             if(intt>0 and intt<tolerance):
-                sql=('''INSERT INTO faceapp_attendancetb( date, time, user_id)VALUES('{}','{}','{}','{}')'''.format(date,time,c))
+                sql=('''INSERT INTO faceapp_attendancetb( id,date, time, user_id)VALUES({},'{}','{}','{}','{}')'''.format(intt+1,date,time,c))
             else:
-                sql=('''INSERT INTO faceapp_attendancetb( date, time, user_id, late_time)VALUES('{}','{}','{}','{}')'''.format(date,time,c,intt))
+                sql=('''INSERT INTO faceapp_attendancetb( date, time, user_id, late_time)VALUES({},'{}','{}','{}','{}')'''.format(intt+1,date,time,c,intt))
             cur.execute(sql)
             mydb.commit()
 
